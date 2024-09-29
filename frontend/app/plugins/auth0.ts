@@ -12,15 +12,13 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(auth0)
 
   addRouteMiddleware('auth', () => {
-    if (process.client) {
-      auth0.checkSession()
-      if (!auth0.isAuthenticated.value) {
-        auth0.loginWithRedirect({
-          appState: {
-            target: useRoute().path,
-          },
-        })
-      }
+    auth0.checkSession()
+    if (!auth0.isAuthenticated.value) {
+      auth0.loginWithRedirect({
+        appState: {
+          target: useRoute().path,
+        },
+      })
     }
   })
 })
