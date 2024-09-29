@@ -18,6 +18,35 @@
             </div>
             <div v-else-if="step === 2" class="space-y-6">
               <h2 class="text-2xl font-semibold mb-2 text-subheading">Step 2: Set Your Schedule Preferences</h2>
+              <div v-for="(day, index) in daysOfWeek" :key="index" class="mb-4">
+                <h3 class="font-semibold text-lg">{{ day }}</h3>
+                <div class="flex items-center mb-2">
+                  <input
+                    type="checkbox"
+                    v-model="schedulePreferences[day].noClass"
+                    class="mr-2"
+                  />
+                  <label>No Class</label>
+                </div>
+                <div v-if="!schedulePreferences[day].noClass">
+                  <div v-for="(slot, slotIndex) in schedulePreferences[day].timeSlots" :key="slotIndex" class="flex items-center mb-2">
+                    <input
+                      v-model="slot.startTime"
+                      type="time"
+                      class="border rounded-md p-1 mr-2"
+                      placeholder="Start Time"
+                    />
+                    <input
+                      v-model="slot.endTime"
+                      type="time"
+                      class="border rounded-md p-1 mr-2"
+                      placeholder="End Time"
+                    />
+                    <button @click="removeTimeSlot(day, slotIndex)" class="text-red-500">Remove</button>
+                  </div>
+                  <button @click="addTimeSlot(day)" class="bg-primary text-white py-1 px-3 rounded-md">Add Time Slot</button>
+                </div>
+              </div>
               <div class="flex justify-between mt-6">
                 <button @click="previousStep" class="bg-base2hover hover:bg-opacity-80 text-text font-semibold py-3 px-6 rounded-md transition duration-300 ease-in-out">Previous</button>
                 <button @click="submitForm" class="bg-primary text-text hover:bg-opacity-80 text-base font-semibold py-3 px-6 rounded-md transition duration-300 ease-in-out">Submit</button>
@@ -79,6 +108,14 @@ const validateClasses = () => {
     alert('Please enter valid class codes (e.g., COP2220, LIT2010)')
   }
   return isValid
+}
+
+const addTimeSlot = (day) => {
+  schedulePreferences[day].timeSlots.push({ startTime: '', endTime: '' })
+}
+
+const removeTimeSlot = (day, index) => {
+  schedulePreferences[day].timeSlots.splice(index, 1)
 }
 
 const submitForm = async () => {
