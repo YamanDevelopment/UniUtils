@@ -238,9 +238,22 @@ class Solver {
 					break;
 				}
 			}
-			if (!duplicate) validSchedules.push(schedule.toJSON());
-
+			if (!duplicate) validSchedules.push(schedule);
 		}
+
+		// Make sure that each schedule has all of the requested courses
+		/*
+		for (let i = 0; i < validSchedules.length; i++) {
+			const schedule = validSchedules[i];
+			const subjectCourses = schedule.getSections().map(section => section.getSubjectCourse());
+			console.log(subjectCourses);
+			const uniqueSubjectCourses = [...new Set(subjectCourses)];
+			if (uniqueSubjectCourses.length !== userPreferences.courses.length) {
+				validSchedules.splice(i, 1);
+				i--;
+			}
+		}
+		*/
 
 		// Return the list of valid schedules
 		return validSchedules;

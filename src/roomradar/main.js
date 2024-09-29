@@ -2,7 +2,7 @@ const { handleSearchQuery } = require('./helpers/searchquery');
 const fs = require('fs');
 const readline = require('readline');
 // import data from rooms
-const data = JSON.parse(fs.readFileSync('updated_room_data.json'));
+
 // make list of buildings (this in particular is VERY fau specific but can be revisited)
 const buildings = {
 	'IN-1': 'Innovation Centre Bldg. 1',
@@ -93,3 +93,5 @@ function main() {
 }
 
 main();
+
+module.exports = { buildings, sample }

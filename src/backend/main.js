@@ -4,6 +4,9 @@ const cors = require('cors');
 
 const Solver = require('./helpers/solver.js');
 const solver = new Solver('../../data/data.json');
+const {handleSearchQuery} = require('/home/amarnath/Projects/UniUtils/src/roomradar/helpers/searchquery.js');
+const room_data = require('../roomradar/updated_room_data.json');
+const {sample, buildings} = require('../roomradar/main.js');
 /*
 const solved = solver.solve(
 	{
@@ -48,7 +51,8 @@ app.post('/api/solve', async (req, res) => {
 	const timeSlotSets = [];
 	for (const schedule of schedules) {
 		const timeSlots = [];
-		for (const section of schedule) {
+		for (const section of schedule.sections) {
+			// if (section.meetingTimes) continue;
 			for (const meetingTime of section.meetingTimes) {
 				if (meetingTime.startTime && meetingTime.endTime) {
 					const timeSlot = {
@@ -57,7 +61,7 @@ app.post('/api/solve', async (req, res) => {
 						startTime: `${meetingTime.startTime.hour ? meetingTime.startTime.hour : '00'}:${meetingTime.startTime.minute ? meetingTime.startTime.minute : '00'}`,
 						endTime: `${meetingTime.endTime.hour ? meetingTime.endTime.hour : '00'}:${meetingTime.endTime.minute ? meetingTime.endTime.minute : '00'}`,
 					};
-					console.log(section.subjectCourse);
+					console.log(section.subjectCourse)
 
 					if (meetingTime.days.monday) timeSlots.push({ course: section.subjectCourse, crn: section.CRN, day: 'Monday', startTime: timeSlot.startTime, endTime: timeSlot.endTime });
 					if (meetingTime.days.tuesday) timeSlots.push({ course: section.subjectCourse, crn: section.CRN, day: 'Tuesday', startTime: timeSlot.startTime, endTime: timeSlot.endTime });
@@ -72,12 +76,16 @@ app.post('/api/solve', async (req, res) => {
 		}
 	}
 
+	console.log(timeSlotSets.length);
 	res.json(timeSlotSets);
 });
 
-// app.length('/api/rooms', (req, res) => {
-
-// });
+app.get('/api/rooms', (req, res) => {
+	const { query } = req;
+	console.log(query);
+	const t = handleSearchQuery(query.query, room_data, { buildings: buildings, sample: sample });
+	res.json(t);
+});
 
 
 // Start the server
