@@ -60,8 +60,11 @@
           </div>
         </div>
 
-        <div v-if="scheduleData">
-          <WeekView :events="scheduleData" />
+        <div v-if="scheduleData" class="mt-8">
+          <div v-for="(calendar, index) in scheduleData" :key="index" class="mb-6">
+            <h2 class="text-2xl font-semibold text-subheading mb-2">Schedule {{ index + 1 }}</h2>
+            <WeekView :events="calendar" />
+          </div>
         </div>
       </div>
     </main>
@@ -76,7 +79,6 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import WeekView from '@/components/week_view.vue'
-import { data } from 'autoprefixer';
 
 const step = ref(1)
 const classes = ref('')
@@ -156,17 +158,12 @@ const submitForm = async () => {
       throw new Error('Failed to fetch schedule data')
     }
     const data = await response.json()
-    scheduleData.value = data // Ensure the data structure matches what your WeekView expects
+    scheduleData.value = data // Set scheduleData to the returned 2D array
   } catch (error) {
     console.error('Error submitting form:', error)
     alert('An error occurred while fetching the schedule. Please try again.')
   } finally {
-    console.log(data)
     isLoading.value = false
   }
 }
 </script>
-
-<style scoped>
-/* Add any styles specific to this component */
-</style>
