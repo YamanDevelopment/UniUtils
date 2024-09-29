@@ -87,7 +87,7 @@ class Solver {
 
 	// Params: userPreferences (JSON)
 	// Returns: Array of schedules (JSON)
-	solve(userPreferences, term) {
+	async solve(userPreferences, term) {
 		// Wait until this.dataLoaded is true
 		while (!this.dataLoaded) {
 			// Do nothing
