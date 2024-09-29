@@ -36,7 +36,7 @@
       friday: 'sm:col-start-6',
       saturday: 'sm:col-start-7',
     }
-    return dayMap[day.toLowerCase()] || ''
+    return dayMap[day] || ''
   }
   
   // Utility to calculate grid row based on time

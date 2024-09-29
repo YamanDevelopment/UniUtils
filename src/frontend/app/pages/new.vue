@@ -90,7 +90,7 @@ const submitForm = async () => {
           prefs.timeSlots.forEach(slot => {
             if (slot.startTime && slot.endTime) {
               acc.push({
-                day: day.toLowerCase(),
+                day: day,
                 fullDay: false,
                 startTime: slot.startTime,
                 endTime: slot.endTime
