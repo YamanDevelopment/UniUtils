@@ -1,16 +1,17 @@
 // helper; takes two arguments query to be compared with item
 function inOrder(query, item) {
+    let q = 0
     if(!(query.length == 1)) {
         for(i of query) {
             console.log(item[q], i)
-            if (i != room[q]) {
+            if (i != item[q]) {
                 return false
             }
             q += 1
         }
         return true
     }
-    return query == item
+    return item[0] == query
 }
 
 // takes two arguments, first search query second json data object third config (see below for example), returns array of Rooms
@@ -48,10 +49,9 @@ function handleSearchQuery(query, data, config={}) {
             let num = tokens.pop()
             // join the tokens back together without the room number to get building name
             let building = tokens.join(" ")
-            // search by building filter by room number
+            // search by building filter by room number (room number is ordered)
             return Object.keys(data).reduce((acc, room) => {
-                console.log(data[room])
-                if(config.buildings[data[room].Building].includes(building) && data[room].Room.includes(num)) {
+                if(config.buildings[data[room].Building].includes(building) && data[room].Room.includes(num) && inOrder(String(num),data[room].Room)) {
                     acc.push(data[room])
                 }
                 return acc;
