@@ -4429,19 +4429,6 @@
     "AudienceCamera": false,
     "rating": 6
   },
-  "CO118": {
-    "Campus": "Boca",
-    "Building": "CO",
-    "Room": "118",
-    "RoomType": "Conference Room",
-    "StudentCapacity": 32,
-    "ZoomEnabled": false,
-    "VideoConf": true,
-    "Mediasite": false,
-    "AudienceMicrophones": false,
-    "AudienceCamera": false,
-    "rating": 8
-  },
   "CR174": {
     "Campus": "Boca",
     "Building": "CR",
@@ -11252,19 +11239,6 @@
     "AudienceCamera": true,
     "rating": 9
   },
-  "GY102": {
-    "Campus": "Boca",
-    "Building": "GY",
-    "Room": "102",
-    "RoomType": "Gym",
-    "StudentCapacity": 2280,
-    "ZoomEnabled": false,
-    "VideoConf": false,
-    "Mediasite": false,
-    "AudienceMicrophones": false,
-    "AudienceCamera": false,
-    "rating": 10
-  },
   "HP114": {
     "Campus": "Boca",
     "Building": "HP",
@@ -11730,19 +11704,6 @@
     "VideoConf": true,
     "Mediasite": false,
     "AudienceMicrophones": false,
-    "AudienceCamera": false,
-    "rating": 8
-  },
-  "ME104": {
-    "Campus": "Boca",
-    "Building": "ME",
-    "Room": "104",
-    "RoomType": "Conference Room",
-    "StudentCapacity": 0,
-    "ZoomEnabled": true,
-    "VideoConf": true,
-    "Mediasite": false,
-    "AudienceMicrophones": true,
     "AudienceCamera": false,
     "rating": 8
   },
@@ -17463,71 +17424,6 @@
       ]
     },
     "rating": 6
-  },
-  "SS229A": {
-    "Campus": "Boca",
-    "Building": "SS",
-    "Room": "229A",
-    "RoomType": "Conference room",
-    "StudentCapacity": 12,
-    "ZoomEnabled": true,
-    "VideoConf": false,
-    "Mediasite": false,
-    "AudienceMicrophones": true,
-    "AudienceCamera": false,
-    "rating": 8
-  },
-  "SU132": {
-    "Campus": "Boca",
-    "Building": "SU",
-    "Room": "132",
-    "RoomType": "Conference room",
-    "StudentCapacity": 36,
-    "ZoomEnabled": true,
-    "VideoConf": false,
-    "Mediasite": false,
-    "AudienceMicrophones": true,
-    "AudienceCamera": false,
-    "rating": 9
-  },
-  "SU228J": {
-    "Campus": "Boca",
-    "Building": "SU",
-    "Room": "228J",
-    "RoomType": "Conference room",
-    "StudentCapacity": 17,
-    "ZoomEnabled": true,
-    "VideoConf": false,
-    "Mediasite": false,
-    "AudienceMicrophones": false,
-    "AudienceCamera": false,
-    "rating": 7
-  },
-  "T6_08A": {
-    "Campus": "Boca",
-    "Building": "T6",
-    "Room": "_08A",
-    "RoomType": "Design Studio",
-    "StudentCapacity": 32,
-    "ZoomEnabled": true,
-    "VideoConf": false,
-    "Mediasite": false,
-    "AudienceMicrophones": false,
-    "AudienceCamera": false,
-    "rating": 8
-  },
-  "T6_08B": {
-    "Campus": "Boca",
-    "Building": "T6",
-    "Room": "_08B",
-    "RoomType": "Design Studio",
-    "StudentCapacity": 32,
-    "ZoomEnabled": true,
-    "VideoConf": false,
-    "Mediasite": false,
-    "AudienceMicrophones": false,
-    "AudienceCamera": false,
-    "rating": 8
   },
   "UN227": {
     "Campus": "Boca",
