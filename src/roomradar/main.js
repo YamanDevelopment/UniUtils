@@ -58,6 +58,26 @@ function main() {
         sample: sample
     })
     console.log(t)
+    const date = new Date()
+    const day = date.getDay()
+    t.forEach(room => {
+        let t = room.schedule
+        if(t[day]) {
+            let b
+            t[day].forEach(time => {
+                if(Number(time.start.substring(0,2)) >= date.getHours() && Number(time.start.substring(0,2)) <= date.getHours()) {
+                    console.log("Room ", room.Building,room.Room," is not available")
+                    b = false
+                    return
+                }
+            })
+            if(b!=false) console.log("Room ", room.Building,room.Room," is available")
+
+        } else console.log("Room ", room.Building,room.Room," is available")
+        
+        
+    })
+
 }
 
 main()
