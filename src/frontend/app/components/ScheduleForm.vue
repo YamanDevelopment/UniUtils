@@ -124,7 +124,7 @@ const submitForm = async () => {
 	}
 	console.log('Form data:', formData)
 	try {
-		await fetch('/api/solve', {
+		await fetch('http://localhost:5000/api/solve', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
