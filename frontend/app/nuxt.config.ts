@@ -9,7 +9,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  plugins: ['~/plugins/auth0.client.ts'],
+  plugins: ['~/plugins/auth0.ts'],
 
   modules: ['@nuxtjs/device'],
   compatibilityDate: '2024-09-28',

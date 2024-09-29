@@ -1,43 +1,43 @@
-<!-- components/Auth0LoginSignup.vue -->
 <template>
-  <div class="min-h-screen bg-gray-100 flex items-center justify-center">
-    <div class="max-w-md w-full space-y-8">
-      <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <!-- ... (rest of the template remains the same) ... -->
-      </div>
-    </div>
+  <div>
+    <a
+      v-if="!isAuthenticated"
+      @click="login"
+    >
+      <slot>Log In</slot>
+    </a>
+    <a
+      v-else
+      @click="logout"
+    >
+      <slot>Log Out</slot>
+    </a>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script lang="ts" setup>
 import { useAuth0 } from '@auth0/auth0-vue'
 
-const isLogin = ref(true)
-const email = ref('')
-const password = ref('')
+// Composition API
+const auth0 = process.client ? useAuth0() : undefined
 
-const { loginWithRedirect, signup } = useAuth0()
+const isAuthenticated = computed(() => {
+  return auth0?.isAuthenticated.value
+})
 
-const toggleMode = () => {
-  isLogin.value = !isLogin.value
-}
-
-const handleSubmit = async () => {
-  if (isLogin.value) {
-    // Implement login logic here
-    console.log('Logging in with:', email.value, password.value)
-    // You would typically call your API here to authenticate
-  } else {
-    // Implement signup logic here
-    console.log('Signing up with:', email.value, password.value)
-    // You would typically call your API here to create a new user
+const login = () => {
+  auth0?.checkSession()
+  if (!auth0?.isAuthenticated.value) {
+    auth0?.loginWithRedirect({
+      appState: {
+        target: useRoute().path,
+      },
+    })
   }
 }
 
-const loginWithGoogle = () => {
-  loginWithRedirect({
-    connection: 'google-oauth2'
-  })
+const logout = () => {
+  navigateTo('/')
+  auth0?.logout()
 }
 </script>

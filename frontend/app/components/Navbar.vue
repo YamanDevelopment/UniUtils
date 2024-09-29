@@ -10,8 +10,8 @@
   
       <!-- Links on the right -->
       <div class="flex gap-8">
-        <NuxtLink to="/AuthPage" class="text-title hover:text-primary text-xl">Login</NuxtLink>
-        <NuxtLink to="/AuthPage" class="text-title hover:text-primary text-xl">Signup</NuxtLink>
+        <NuxtLink to="/login" class="text-title hover:text-primary text-xl">Login</NuxtLink>
+        <NuxtLink to="/login" class="text-title hover:text-primary text-xl">Signup</NuxtLink>
         <NuxtLink to="/about" class="text-title hover:text-primary text-xl">About</NuxtLink>
       </div>
     </nav>
