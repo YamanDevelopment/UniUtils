@@ -75,9 +75,9 @@ app.post('/api/solve', async (req, res) => {
 	res.json(timeSlotSets);
 });
 
-app.length('/api/rooms', (req, res) => {
+// app.length('/api/rooms', (req, res) => {
 
-});
+// });
 
 
 // Start the server
