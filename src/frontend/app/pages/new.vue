@@ -2,10 +2,10 @@
   <div class="min-h-screen bg-[#1a1825] flex flex-col">
     <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="max-w-3xl mx-auto">
-        <ScheduleForm @submit="fetchSchedule" />
+        <ScheduleForm v-if="!scheduleData.length" @submit="fetchSchedule" />
         
         <!-- Render multiple week-view components if scheduleData is available -->
-        <div v-if="scheduleData.length">
+        <div v-else>
           <week-view 
             v-for="(schedule, index) in scheduleData" 
             :key="index" 
