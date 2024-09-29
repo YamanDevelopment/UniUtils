@@ -75,6 +75,11 @@ app.post('/api/solve', async (req, res) => {
 	res.json(timeSlotSets);
 });
 
+app.length('/api/rooms', (req, res) => {
+
+});
+
+
 // Start the server
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
