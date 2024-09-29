@@ -11,7 +11,6 @@
       <!-- Links on the right -->
       <div class="flex gap-8">
         <NuxtLink v-if="isAuthenticated" to="/dashboard" class="text-title hover:text-primary text-xl">Dashboard</NuxtLink>
-        <Auth0LoginSignup class="text-title hover:text-primary text-xl" />
         <NuxtLink to="/about" class="text-title hover:text-primary text-xl">About</NuxtLink>
       </div>
     </nav>
