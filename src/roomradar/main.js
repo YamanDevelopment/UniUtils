@@ -57,7 +57,7 @@ function main() {
         buildings: buildings,
         sample: sample
     })
-    console.log(JSON.stringify(t))
+    console.log(t)
 }
 
 main()
