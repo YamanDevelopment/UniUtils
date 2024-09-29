@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="cursor-pointer">
     <a
       v-if="!isAuthenticated"
       @click="login"
     >
-      <slot>Log In</slot>
+      <slot>Get Started</slot>
     </a>
     <a
       v-else
