@@ -1,18 +1,24 @@
 <!-- pages/dashboard.vue -->
 <template>
-  <div class="w-screen h-[90vh] flex flex-col items-center p-4">
+  <div class="w-screen h-[90vh] flex items-center gap-3 p-4">
     <div class="w-[30vw] h-full rounded-xl bg-base2 flex flex-col items-center gap-5 p-6">
       <h1 class="text-title text-5xl">Room Radar</h1>
       <p class="text-subheading text-xl">A tool to find empty classrooms.</p>
       <input v-model="query" placeholder="Type your query here" class="bg-base w-[90%] h-[5%] rounded-xl text-text px-3" />
       <button @click="searchRooms" class="px-4 py-2 rounded-xl text-text text-center text-xl font-bold bg-gradient-to-br from-primary to-accent">Search</button>
+      <div class="max-h-[75%] overflow-y-scroll p-4">
+        <div v-for="room in rooms" :key="room.Room" class="w-[30vw] h-[20vh] rounded-xl bg-base flex flex-col items-center gap-2 mb-4 p-4">
+          <h2 class="text-title text-2xl">{{ room.Building }} - {{ room.Room }}</h2>
+          <p class="text-subheading text-lg">Status: {{ room.status }}</p>
+        </div>
+      </div>
     </div>
-    <div class="flex flex-wrap gap-3 w-full h-full p-4">
+    <!-- <div class="flex flex-wrap gap-3 w-full h-full p-4">
       <div v-for="room in rooms" :key="room.Room" class="w-[30vw] h-[20vh] rounded-xl bg-base2 flex flex-col items-center gap-2 p-4">
         <h2 class="text-title text-2xl">{{ room.Building }} - {{ room.Room }}</h2>
         <p class="text-subheading text-lg">Status: {{ room.status }}</p>
       </div>
-    </div>
+    </div> -->
     <div class="flex flex-col gap-3 w-[70vw] h-full">
       <div class="w-full h-1/2 p-6 bg-base2 flex gap-5 rounded-xl overflow-x-scroll">
         <h1 class="text-3xl text-title font-bold">Favorites</h1>
@@ -55,6 +61,7 @@ const rooms = ref([])
 
 const searchRooms = async () => {
   try {
+    const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     const response = await fetch(`http://localhost:5000/api/rooms?query=${query.value}`)
     if (!response.ok) {
       throw new Error('Failed to fetch room data')
@@ -63,25 +70,25 @@ const searchRooms = async () => {
     const date = new Date()
    
     val.forEach(element => {
-      console.log(element)
       if(!element.schedule) {
         element.status = 'Available all day' 
         return
       }
-      if(!element.schedule[date.getDay()]) {
+      if(!element.schedule[weekday[date.getDay()]]) {
         element.status = 'Available all day'
         return
       }
-      element.schedule[date.getDay()].forEach(event => {
-        event.timing = {start: {hours: Number(event.start.substring(0,2)), minutes: Number(event.start.substring(3,5))}, end: Number(event.end.substring(0,2)), minutes: Number(event.end.substring(3,5))}
-        if(event.timing.start.hours > date.getHours() && event.timing.start.minutes > date.getMinutes() && event.timing) {
-          event.status = 'Availble until  ' + event.start
+      element.schedule[weekday[date.getDay()]].forEach(event => {
+        event.timing = {start: {hours: Number(event.start.substring(0,2)), minutes: Number(event.start.substring(3,5))}, end: {hours: Number(event.end.substring(0,2)), minutes: Number(event.end.substring(3,5))}}
+        console.log(event.timing)
+        if(event.timing.start.hours > date.getHours() && event.timing.start.minutes > date.getMinutes() && event.timing.end.hours < date.getHours() && event.timing.end.minutes < date.getMinutes()) {
+          element.status = 'Availble until  ' + event.start
         } else if(event.timing.end.hours < date.getHours() && event.timing.end.minutes < date.getMinutes()) {
-          event.status = 'Past'
+          element.status = 'Available for rest of the day'
         } else {
-          event.status = 'Ongoing'
+          element.status = 'Unavailable until ' + event.end
         }
-      })
+      })    
       
     });
     rooms.value = val
