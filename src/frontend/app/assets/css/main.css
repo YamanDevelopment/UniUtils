@@ -6,3 +6,19 @@ body{
     background: #1a1825;
     overflow-x: hidden;
 }
+
+/* For Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+    height: 8px; /* Height of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #6ca6b7; /* Color of the scroll thumb */
+    border-radius: 10px; /* Round edges */
+}
+
+::-webkit-scrollbar-track {
+    background: #b0afb8; /* Background of the scrollbar track */
+    border-radius: 10px; /* Round edges */
+}

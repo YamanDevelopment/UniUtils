@@ -14,7 +14,7 @@
             </button>
             <button type="button" class="flex flex-col items-center pb-3 pt-2">
               W
-              <span class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white">12</span>
+              <span class="mt-1 flex h-8 w-8 items-center justify-center font-semibold text-gray-900">12</span>
             </button>
             <button type="button" class="flex flex-col items-center pb-3 pt-2">
               T

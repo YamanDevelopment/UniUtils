@@ -2,7 +2,10 @@
 <template>
     <div class="w-screen h-[90vh] flex gap-3 items-center p-4">
         <div class="w-[30vw] h-full rounded-xl bg-base2 flex flex-col items-center gap-5 p-6">
-          <input class="bg-base w-[90%] h-[10%] rounded-full text-text"></input>
+          <h1 class="text-title text-5xl">Room Radar</h1>
+          <p class="text-subheading text-xl">A tool to find empty classrooms.</p>
+          <input placeholder="Type your query here" class="bg-base w-[90%] h-[5%] rounded-xl text-text px-3"></input>
+          <button class="px-4 py-2 rounded-xl text-text text-center text-xl font-bold bg-gradient-to-br from-primary to-accent">Search</button>
         </div>
         <div class="flex flex-col gap-3 w-[70vw] h-full">
             <div class="w-full h-1/2 p-6 bg-base2 flex gap-5 rounded-xl overflow-x-scroll">
