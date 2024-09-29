@@ -61,7 +61,7 @@ class Section {
 	// Returns: boolean
 	conflictsWithSection(section) {
 		// Check if the sections are the same
-		console.log(this.CRN)
+		console.log(this.CRN);
 		if (this.CRN == section.getCRN()) {
 			console.log(`DEBUG: ${this.CRN} == ${section.getCRN()}`);
 			return false;
