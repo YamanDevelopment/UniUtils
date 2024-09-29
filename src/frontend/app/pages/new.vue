@@ -76,6 +76,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import WeekView from '@/components/week_view.vue'
+import { data } from 'autoprefixer';
 
 const step = ref(1)
 const classes = ref('')
@@ -160,6 +161,7 @@ const submitForm = async () => {
     console.error('Error submitting form:', error)
     alert('An error occurred while fetching the schedule. Please try again.')
   } finally {
+    console.log(data)
     isLoading.value = false
   }
 }

@@ -43,6 +43,8 @@ const props = defineProps({
 
 // Utility to map the day to a CSS grid column
 const dayToColClass = (day) => {
+  // Check if day is defined and valid before calling toLowerCase
+  const validDay = day ? day.toLowerCase() : ''
   const dayMap = {
     monday: 'sm:col-start-2',
     tuesday: 'sm:col-start-3',
@@ -51,7 +53,7 @@ const dayToColClass = (day) => {
     friday: 'sm:col-start-6',
     saturday: 'sm:col-start-7',
   }
-  return dayMap[day.toLowerCase()] || ''
+  return dayMap[validDay] || '' // Default to empty string if day is not valid
 }
 
 // Utility to calculate grid row based on time
@@ -80,3 +82,4 @@ const formatTime = (time) => {
   return `${formattedHour}:${minute} ${period}`
 }
 </script>
+
