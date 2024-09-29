@@ -53,7 +53,7 @@ const buildings = {
 const sample = "ED112"
 function main() {
 // idk add rest api here?
-    let t = handleSearchQuery("Engineering East 2", data, {
+    let t = handleSearchQuery("East", data, {
         buildings: buildings,
         sample: sample
     })

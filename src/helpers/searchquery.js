@@ -17,12 +17,12 @@ function inOrder(query, item) {
 // takes two arguments, first search query second json data object third config (see below for example), returns array of Rooms
 function handleSearchQuery(query, data, config={}) {
     // if query is shorter than sample rm # assume it is a partial room number (also add a number check)
-    if(query.length <= config.sample.length) {
+    if(query.length <= config.sample.length && query.match(/[0-9]+/g)) {
         // filters the array by matching the room numbers with the room number entered
         return Object.keys(data).reduce((acc, room) => {
             if (room.includes(query)) {
                 let q = 0
-                // ensures room numbers match if in same numerical order (only applies when query contains more than 1 character)
+                // ensures room numbers match if in same order
                 if(inOrder(query,room)) {
                     acc.push(data[room]);
                 }
