@@ -3,7 +3,6 @@
     <h1 class="text-3xl font-bold mb-6 text-title">Schedule Planner</h1>
     <div v-if="!scheduleData">
       <div v-if="step === 1" class="space-y-4">
-        <!-- Step 1 content -->
         <h2 class="text-2xl font-semibold mb-2 text-subheading">Step 1: Enter Your Classes</h2>
         <p class="mb-2 text-text">Enter your classes, separated by commas (e.g., COP2220, LIT2010)</p>
         <input
@@ -11,13 +10,12 @@
           type="text"
           class="w-full p-3 bg-base border border-primary rounded-md text-text focus:outline-none focus:ring-2 focus:ring-primary"
           placeholder="COP2220, LIT2010"
-        >
+        />
         <button @click="nextStep" class="w-full bg-primary text-text hover:bg-opacity-80 text-base font-semibold py-3 px-4 rounded-md transition duration-300 ease-in-out">Next</button>
       </div>
       <div v-else-if="step === 2" class="space-y-6">
-        <!-- Step 2 content -->
         <h2 class="text-2xl font-semibold mb-2 text-subheading">Step 2: Set Your Schedule Preferences</h2>
-        <!-- ... (rest of step 2 content) ... -->
+        <!-- Your scheduling preferences input components go here -->
         <div class="flex justify-between mt-6">
           <button @click="previousStep" class="bg-base2hover hover:bg-opacity-80 text-text font-semibold py-3 px-6 rounded-md transition duration-300 ease-in-out">Previous</button>
           <button @click="submitForm" class="bg-primary text-text hover:bg-opacity-80 text-base font-semibold py-3 px-6 rounded-md transition duration-300 ease-in-out">Submit</button>
@@ -36,13 +34,14 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, defineProps } from 'vue'
 import WeekView from './week_view.vue'
+
+const props = defineProps(['scheduleData']) // Accept scheduleData as a prop
 
 const step = ref(1)
 const classes = ref('')
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-const scheduleData = ref(null)
 const isLoading = ref(false)
 
 const schedulePreferences = reactive(
@@ -51,6 +50,7 @@ const schedulePreferences = reactive(
     return acc
   }, {})
 )
+
 
 const nextStep = () => {
   if (validateClasses()) {
