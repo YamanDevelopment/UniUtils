@@ -1,11 +1,11 @@
 <template>
   <div class="min-h-screen bg-[#1a1825] flex flex-col">
-    <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="max-w-3xl mx-auto">
-        <div class="bg-base2 rounded-lg shadow-lg p-6">
-          <h1 class="text-3xl font-bold mb-6 text-title">Schedule Planner</h1>
+    <main class="flex-grow flex justify-center p-8">
+      <div>
+        <div v-if="!scheduleData" class="bg-base2 rounded-lg shadow-lg p-6 max-w-3xl">
+          <h1 class="text-3xl font-bold mb-6 text-title max-w-3xl">Schedule Planner</h1>
           <div v-if="!scheduleData">
-            <div v-if="step === 1" class="space-y-4">
+            <div v-if="step === 1" class="space-y-4 max-w-3xl">
               <h2 class="text-2xl font-semibold mb-2 text-subheading">Step 1: Enter Your Classes</h2>
               <p class="mb-2 text-text">Enter your classes, separated by commas (e.g., COP2220, LIT2010)</p>
               <input
@@ -16,7 +16,7 @@
               />
               <button @click="nextStep" class="w-full bg-primary text-text hover:bg-opacity-80 text-base font-semibold py-3 px-4 rounded-md transition duration-300 ease-in-out">Next</button>
             </div>
-            <div v-else-if="step === 2" class="space-y-6">
+            <div v-else-if="step === 2" class="space-y-6 max-w-3xl">
               <h2 class="text-2xl font-semibold mb-2 text-subheading">Step 2: Set Your Schedule Preferences</h2>
               <div v-for="(day, index) in daysOfWeek" :key="index" class="mb-4">
                 <h3 class="font-semibold text-lg text-text">{{ day }}</h3>
@@ -59,18 +59,20 @@
             </div>
           </div>
         </div>
-
-        <div v-if="scheduleData" class="mt-8">
+        <div v-if="scheduleData" class="w-screen flex justify-center">
+          <h1 class="text-3xl font-bold mb-6 text-title max-w-3xl bg-base2 rounded-lg shadow-lg p-6">Possible Schedules</h1>
+        </div>
+        <div v-if="scheduleData" class="mt-8 flex flex-wrap justify-center w-screen gap-4">
           <div v-for="(calendar, index) in scheduleData" :key="index" class="mb-6">
-            <h2 class="text-2xl font-semibold text-subheading mb-2">Schedule {{ index + 1 }}</h2>
-            <WeekView :events="calendar" />
+            <h2 class="text-2xl font-semibold text-subheading">Schedule {{ index + 1 }}</h2>
+            <WeekView class="w-[40vw] max-h-[40vh]":events="calendar" />
           </div>
         </div>
       </div>
     </main>
     <footer class="bg-base2 mt-8">
       <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-subheading">
-        © 2024 Student Schedule Planner. All rights reserved.
+        © 2024 No real copywrite. No rights reserved?
       </div>
     </footer>
   </div>

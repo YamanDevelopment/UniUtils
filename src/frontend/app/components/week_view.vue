@@ -43,7 +43,7 @@
               <span>Mon <span class="items-center justify-center font-semibold text-gray-900">11</span></span>
             </div>
             <div class="flex items-center justify-center py-3">
-              <span class="flex items-baseline">Tue <span class="ml-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white">12</span></span>
+              <span>Tue <span class="items-center justify-center font-semibold text-gray-900">12</span></span>
             </div>
             <div class="flex items-center justify-center py-3">
               <span>Wed <span class="items-center justify-center font-semibold text-gray-900">13</span></span>
