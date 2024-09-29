@@ -16,7 +16,7 @@ const buildings = {
     "GS": "General Classroom - South",
     "SW": "College Of Social Work And Criminal Justice",
     "AL": "College Of Arts & Letters",
-    "BU": "College Of Business In Phil Smith Hall",
+    "BU": "Phil Smith Hall",
     "ED": "College Of Education",
     "EC": "College Of Engineering And Computer Science",
     "BC": "College Of Medicine",
