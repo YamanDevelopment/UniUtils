@@ -3,7 +3,6 @@ function inOrder(query, item) {
     let q = 0
     if(!(query.length == 1)) {
         for(i of query) {
-            console.log(item[q], i)
             if (i != item[q]) {
                 return false
             }
