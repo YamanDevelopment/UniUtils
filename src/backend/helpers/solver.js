@@ -5,7 +5,7 @@ const path = require('path');
 // Importing the necessary classes
 const Course = require('./structs/Course.js');
 const Schedule = require('./structs/Schedule.js');
-const Classroom = require('./structs/Classroom.js');
+// const Classroom = require('./structs/Classroom.js');
 // const Section = require('../structs/Section.js');
 
 // This class is the main solver class. It will

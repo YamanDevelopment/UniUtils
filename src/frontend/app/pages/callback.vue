@@ -21,7 +21,7 @@ onMounted(async () => {
       await saveUserToDatabase(userData);
 
       // Redirect to dashboard after successful authentication
-      router.push("/dashboard");
+      router.push("/new");
     } else {
       // Handle case where the user is not authenticated
       console.error("User not authenticated");
@@ -30,7 +30,7 @@ onMounted(async () => {
   } catch (error) {
     console.error("Error during authentication:", error);
     // Fallback redirect in case of an error
-    router.push("/dashboard");
+    router.push("/new");
   }
 });
 

@@ -63,56 +63,76 @@ import { ref, reactive } from 'vue'
 
 const step = ref(1)
 const classes = ref('')
-const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 const schedulePreferences = reactive(
-  daysOfWeek.reduce((acc, day) => {
-    acc[day] = { noClass: false, timeSlots: [] }
-    return acc
-  }, {})
+	daysOfWeek.reduce((acc, day) => {
+		acc[day] = { noClass: false, timeSlots: [] }
+		return acc
+	}, {})
 )
 
 const nextStep = () => {
-  if (validateClasses()) {
-    step.value++
-  }
+	if (validateClasses()) {
+		step.value++
+	}
 }
 
 const previousStep = () => {
-  step.value--
+	step.value--
 }
 
 const validateClasses = () => {
-  const classRegex = /^[A-Z]{3}\d{4}$/
-  const classesArray = classes.value.split(',').map(c => c.trim())
-  const isValid = classesArray.every(c => classRegex.test(c))
-  if (!isValid) {
-    alert('Please enter valid class codes (e.g., COP2220, LIT2010)')
-  }
-  return isValid
+	const classRegex = /^[A-Z]{3}\d{4}$/
+	const classesArray = classes.value.split(',').map(c => c.trim())
+	const isValid = classesArray.every(c => classRegex.test(c))
+	if (!isValid) {
+		alert('Please enter valid class codes (e.g., COP2220, LIT2010)')
+	}
+	return isValid
 }
 
 const addTimeSlot = (day) => {
-  schedulePreferences[day].timeSlots.push({ startTime: '', endTime: '' })
+	schedulePreferences[day].timeSlots.push({ startTime: '', endTime: '' })
 }
 
 const removeTimeSlot = (day, index) => {
-  schedulePreferences[day].timeSlots.splice(index, 1)
+	schedulePreferences[day].timeSlots.splice(index, 1)
 }
 
-const submitForm = () => {
-  const formData = {
-    classes: classes.value.split(',').map(c => c.trim()),
-    schedulePreferences: Object.entries(schedulePreferences).reduce((acc, [day, prefs]) => {
-      acc[day] = {
-        noClass: prefs.noClass,
-        timeSlots: prefs.noClass ? [] : prefs.timeSlots.filter(slot => slot.startTime && slot.endTime)
-      }
-      return acc
-    }, {})
-  }
-  console.log('Form data:', formData)
-  // Here you would typically send the data to your backend
-  // For example: await $fetch('/api/submit-schedule', { method: 'POST', body: formData })
+const submitForm = async () => {
+	const formData = {
+		userPrefs: {
+			courses: classes.value.split(',').map(c => c.trim()),
+			excludedTimes: Object.entries(schedulePreferences).reduce((acc, [day, prefs]) => {
+				if (!prefs.noClass) {
+					prefs.timeSlots.forEach(slot => {
+						if (slot.startTime && slot.endTime) {
+							acc.push({
+								day: day.toLowerCase(),
+								fullDay: false,
+								startTime: slot.startTime,
+								endTime: slot.endTime
+							})
+						}
+					})
+				}
+				return acc
+			}, [])
+		},
+		term: '202408'
+	}
+	console.log('Form data:', formData)
+	try {
+		await fetch('/api/solve', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(formData)
+		})
+	} catch (error) {
+		console.error('Error submitting form:', error)
+	}
 }
 </script>

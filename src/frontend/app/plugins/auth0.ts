@@ -5,7 +5,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     domain: "dev-povandkckxqn8g8m.us.auth0.com",
     clientId: "NjBZABrlmDMedN3stcrZhOhmrg94eW7j",
     authorizationParams: {
-      redirect_uri: 'http://localhost:3000/callback'
+      redirect_uri: 'http://localhost:3000'
     }
   })
   
