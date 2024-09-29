@@ -19,14 +19,14 @@
             <div v-else-if="step === 2" class="space-y-6">
               <h2 class="text-2xl font-semibold mb-2 text-subheading">Step 2: Set Your Schedule Preferences</h2>
               <div v-for="(day, index) in daysOfWeek" :key="index" class="mb-4">
-                <h3 class="font-semibold text-lg">{{ day }}</h3>
+                <h3 class="font-semibold text-lg text-text">{{ day }}</h3>
                 <div class="flex items-center mb-2">
                   <input
                     type="checkbox"
                     v-model="schedulePreferences[day].noClass"
                     class="mr-2"
                   />
-                  <label>No Class</label>
+                  <label class="text-text">No Class</label>
                 </div>
                 <div v-if="!schedulePreferences[day].noClass">
                   <div v-for="(slot, slotIndex) in schedulePreferences[day].timeSlots" :key="slotIndex" class="flex items-center mb-2">
