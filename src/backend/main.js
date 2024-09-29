@@ -50,23 +50,26 @@ app.post('/api/solve', async (req, res) => {
 		const timeSlots = [];
 		for (const section of schedule) {
 			for (const meetingTime of section.meetingTimes) {
-				const timeSlot = {
-					course: section.course,
-					section: section.CRN,
-					startTime: `${meetingTime.startTime.hour}:${meetingTime.startTime.minute}`,
-					endTime: `${meetingTime.endTime.hour}:${meetingTime.endTime.minute}`,
-				};
+				if (meetingTime.startTime && meetingTime.endTime) {
+					const timeSlot = {
+						course: section.subjectCourse,
+						section: section.CRN,
+						startTime: `${meetingTime.startTime.hour ? meetingTime.startTime.hour : '00'}:${meetingTime.startTime.minute ? meetingTime.startTime.minute : '00'}`,
+						endTime: `${meetingTime.endTime.hour ? meetingTime.endTime.hour : '00'}:${meetingTime.endTime.minute ? meetingTime.endTime.minute : '00'}`,
+					};
+					console.log(section.subjectCourse);
 
-				if (meetingTime.days.monday) timeSlots.push({ ...timeSlot, day: 'Monday' });
-				if (meetingTime.days.tuesday) timeSlots.push({ ...timeSlot, day: 'Tuesday' });
-				if (meetingTime.days.wednesday) timeSlots.push({ ...timeSlot, day: 'Wednesday' });
-				if (meetingTime.days.thursday) timeSlots.push({ ...timeSlot, day: 'Thursday' });
-				if (meetingTime.days.friday) timeSlots.push({ ...timeSlot, day: 'Friday' });
-				if (meetingTime.days.saturday) timeSlots.push({ ...timeSlot, day: 'Saturday' });
-				if (meetingTime.days.sunday) timeSlots.push({ ...timeSlot, day: 'Sunday' });	
+					if (meetingTime.days.monday) timeSlots.push({ course: section.subjectCourse, crn: section.CRN, day: 'Monday', startTime: timeSlot.startTime, endTime: timeSlot.endTime });
+					if (meetingTime.days.tuesday) timeSlots.push({ course: section.subjectCourse, crn: section.CRN, day: 'Tuesday', startTime: timeSlot.startTime, endTime: timeSlot.endTime });
+					if (meetingTime.days.wednesday) timeSlots.push({ course: section.subjectCourse, crn: section.CRN, day: 'Wednesday', startTime: timeSlot.startTime, endTime: timeSlot.endTime });
+					if (meetingTime.days.thursday) timeSlots.push({ course: section.subjectCourse, crn: section.CRN, day: 'Thursday', startTime: timeSlot.startTime, endTime: timeSlot.endTime });
+					if (meetingTime.days.friday) timeSlots.push({ course: section.subjectCourse, crn: section.CRN, day: 'Friday', startTime: timeSlot.startTime, endTime: timeSlot.endTime });
+					if (meetingTime.days.saturday) timeSlots.push({ course: section.subjectCourse, crn: section.CRN, day: 'Saturday', startTime: timeSlot.startTime, endTime: timeSlot.endTime });
+					if (meetingTime.days.sunday) timeSlots.push({ course: section.subjectCourse, crn: section.CRN, day: 'Sunday', startTime: timeSlot.startTime, endTime: timeSlot.endTime });
+				}
 			}
+			timeSlotSets.push(timeSlots);
 		}
-		timeSlotSets.push(timeSlots);
 	}
 
 	res.json(timeSlotSets);
