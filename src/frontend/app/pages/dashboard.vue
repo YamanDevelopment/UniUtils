@@ -9,7 +9,8 @@
       <div class="max-h-[75%] overflow-y-scroll p-4">
         <div v-for="room in rooms" :key="room.Room" class="w-[30vw] h-[20vh] rounded-xl bg-base flex flex-col items-center gap-2 mb-4 p-4">
           <h2 class="text-title text-2xl">{{ room.Building }} - {{ room.Room }}</h2>
-          <p class="text-subheading text-lg">Status: {{ room.status }}</p>
+          <p class="text-subheading text-lg">Type: {{ room.RoomType }}</p>
+          <p class="text-subheading text-lg ">Status: {{ room.status }}</p>
         </div>
       </div>
     </div>
@@ -67,30 +68,7 @@ const searchRooms = async () => {
       throw new Error('Failed to fetch room data')
     }
     let val = await response.json()
-    const date = new Date()
    
-    val.forEach(element => {
-      if(!element.schedule) {
-        element.status = 'Available all day' 
-        return
-      }
-      if(!element.schedule[weekday[date.getDay()]]) {
-        element.status = 'Available all day'
-        return
-      }
-      element.schedule[weekday[date.getDay()]].forEach(event => {
-        event.timing = {start: {hours: Number(event.start.substring(0,2)), minutes: Number(event.start.substring(3,5))}, end: {hours: Number(event.end.substring(0,2)), minutes: Number(event.end.substring(3,5))}}
-        console.log(event.timing)
-        if(event.timing.start.hours > date.getHours() && event.timing.start.minutes > date.getMinutes() && event.timing.end.hours < date.getHours() && event.timing.end.minutes < date.getMinutes()) {
-          element.status = 'Availble until  ' + event.start
-        } else if(event.timing.end.hours < date.getHours() && event.timing.end.minutes < date.getMinutes()) {
-          element.status = 'Available for rest of the day'
-        } else {
-          element.status = 'Unavailable until ' + event.end
-        }
-      })    
-      
-    });
     rooms.value = val
   } catch (error) {
     console.error('Error fetching rooms:', error)
