@@ -20,6 +20,8 @@ export default {
 				primary: '#6ca6b7',
 				secondary: '#dcb4b2',
 				accent: '#eb98a8',
+				green: '#8bc34a', // Added green color
+				red: '#f44336' // Added red color
 			},
 		},
 	},

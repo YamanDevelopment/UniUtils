@@ -4,13 +4,14 @@
     <div class="w-[30vw] h-full rounded-xl bg-base2 flex flex-col items-center gap-5 p-6">
       <h1 class="text-title text-5xl">Room Radar</h1>
       <p class="text-subheading text-xl">A tool to find empty classrooms.</p>
-      <input v-model="query" placeholder="Type your query here" class="bg-base w-[90%] h-[5%] rounded-xl text-text px-3" />
+      <input v-model="query" placeholder="Search for a room (e.g. ED112, Engineering East 102)" class="bg-base w-[90%] h-[5%] rounded-xl text-text px-3" />
       <button @click="searchRooms" class="px-4 py-2 rounded-xl text-text text-center text-xl font-bold bg-gradient-to-br from-primary to-accent">Search</button>
       <div class="max-h-[75%] overflow-y-scroll p-4">
-        <div v-for="room in rooms" :key="room.Room" class="w-[30vw] h-[20vh] rounded-xl bg-base flex flex-col items-center gap-2 mb-4 p-4">
+        <div v-for="room in rooms" :key="room.Room" class="w-[30vw] h-[30vh] rounded-xl bg-base flex flex-col items-center gap-2 mb-4 p-4">
           <h2 class="text-title text-2xl">{{ room.Building }} - {{ room.Room }}</h2>
           <p class="text-subheading text-lg">Type: {{ room.RoomType }}</p>
           <p class="text-subheading text-lg ">Status: {{ room.status }}</p>
+          <p class="text-subheading text-lg ">Rating: {{ room.rating }}</p>
         </div>
       </div>
     </div>

@@ -86,6 +86,12 @@ app.get('/api/rooms', (req, res) => {
 	const t = handleSearchQuery(query.query, room_data, { buildings: buildings, sample: sample });
 	const date = new Date();
 	const time = date.getHours() + date.getMinutes() / 60
+	// converts a given time that follows the format above to a 12 hour string format
+	const getTimeString = (e) => {
+		let t = Math.floor(e)
+		let hours = t > 12 ? t - 12 : t;
+		return hours + ":" + (Math.floor((e - t)*60) > 9 ? Math.floor((e - t)*60) : "0" + Math.floor((e - t)*60)) + (t < 12 ? "AM" : "PM");
+	}
 	t.forEach(r => {
 		console.log(r.schedule)
 		const weekdays = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -117,13 +123,15 @@ app.get('/api/rooms', (req, res) => {
 		let status_set;
 		let first_class
 		
+
 		r.schedule[weekdays[date.getDay()]].forEach(e => {
 			if(time > e.timing.start && e.timing.end > time) {
-
-				r.status = "Unavailable until " + e.end;
+				let timeString = getTimeString(e.timing.end)
+				r.status = "Unavailable until " + timeString
 				status_set = true;
 			} else if (time < e.timing.start && !status_set) {
-				r.status = "Available until " + e.start
+				let timeString = getTimeString(e.timing.start)
+				r.status = "Available until " + timeString
 				status_set = true
 			} else if (status_set) {
 				return
@@ -132,6 +140,9 @@ app.get('/api/rooms', (req, res) => {
 				r.status = "Available for rest of day"
 			}
 		})
+	})
+	t.sort((a,b) => {
+		return a.rating > b.rating ? -1 : a.rating == b.rating ? 0 : 1
 	})
 	res.json(t);
 });
