@@ -17,29 +17,25 @@ function handleSearchQuery(query, config) {
     };
     // special case: room is searched in format of "Building_Name Room #" (valid at FAU)
     if(query.split(" ").length > 1) results.rooms = results.rooms.concat(rooms.filter(room => CheckRoom(query,room)))
-    // everything after this point does not work and needs to be redone (except the functions)
-        else {
+    else {
         // checking room numbers
         let counter = 0;
         if(query.split(" ").length == 1) results.roomNumbers = results.roomNumbers.concat(roomNumbers.filter(num => CheckNum(query,num)))
 
         // checking building names
         let buildings = [...config.buildings]
-        for(i of buildings) buildings[i].includes(query) || buildings[i].includes(getStdCase(query)) ? null : (() => {
-            buildings.splice(i);
-            counter += 1;
-        })()
-        if (counter > 0) results.buildings = buildings
+        results.buildings = results.buildings.concat(buildings.filter(bldg => bldg.includes(query) || bldg.includes(query.toUpperCase()) || bldg.includes(query.toLowerCase()) || bldg.includes(getStdCase(query))))
+        console.log("results: ", results.buildings)
     }
     // result handling!
-    let final_results = [];
-    final_results = final_results.concat(results.rooms);
-    for(rmNum in roomNumbers) final_results.push(config.data[rmNum]);
-    // EXCEPTIONALLY INEFFICIENT. NEED TO RETHINK ASAP.
-    if(results.buildings.length > 0) {
-        for(i in config.data) results.buildings.includes(config.data[i].Building) ? null : final_results.push(config.data[i]);
+    if(results.rooms.length > 0) return results.rooms
+    else {
+        let fResults = [];
+        // logic issue, WILL include duplicate rooms for queries less than 3 characters.
+        if(results.buildings > 0) for(bldg of results.buildings) fResults.concat(rooms.filter(room => room.Building == bldg))
+        if(results.roomNumbers > 0) for(num of results.roomNumbers) fResults.push(data[num])
+        return fResults;
     }
-    return final_results
 }
 
  // convert the query to standard case (capitalize each word)

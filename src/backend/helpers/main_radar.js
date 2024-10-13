@@ -45,7 +45,7 @@ const buildings = {
 	'SE': 'Charles E. Schmidt College of Science',
 	'UN': 'Student Union',
 };
-console.log(handleSearchQuery("Engineering 3", {
+handleSearchQuery("Engineering East", {
     data: JSON.parse(readFileSync("../../data/room_data.json")),
     buildings: Object.values(buildings)
-}))
+})
