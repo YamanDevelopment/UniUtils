@@ -49,7 +49,7 @@ function handleSearchQuery(query, config) {
     return query;
 }
 const CheckNum = (query, num) => {
-    for(i in query) if(query[i] != num[i]) return false
+    for(i in query) if(query[i].toUpperCase() != num[i]) return false
     return true
 }
 const CheckRoom = (query, room) => {
