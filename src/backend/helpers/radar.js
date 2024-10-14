@@ -1,4 +1,3 @@
-
 const assert = require('node:assert').strict;
 function handleSearchQuery(query, config) {
     try {
@@ -16,7 +15,7 @@ function handleSearchQuery(query, config) {
         roomNumbers: [],
     };
     // special case: room is searched in format of "Building_Name Room #" (valid at FAU)
-    if(query.split(" ").length > 1) results.rooms = results.rooms.concat(rooms.filter(room => CheckRoom(query,room)))
+    if(query.split(" ").length > 1 && query.match(/[0-9]+/)) results.rooms = results.rooms.concat(rooms.filter(room => CheckRoom(query,room)))
     else {
         // checking room numbers
         let counter = 0;
@@ -25,25 +24,29 @@ function handleSearchQuery(query, config) {
         // checking building names
         let buildings = [...config.buildings]
         results.buildings = results.buildings.concat(buildings.filter(bldg => bldg.includes(query) || bldg.includes(query.toUpperCase()) || bldg.includes(query.toLowerCase()) || bldg.includes(getStdCase(query))))
-        console.log("results: ", results.buildings)
     }
     // result handling!
     if(results.rooms.length > 0) return results.rooms
     else {
         let fResults = [];
         // logic issue, WILL include duplicate rooms for queries less than 3 characters.
-        if(results.buildings > 0) for(bldg of results.buildings) fResults.concat(rooms.filter(room => room.Building == bldg))
-        if(results.roomNumbers > 0) for(num of results.roomNumbers) fResults.push(data[num])
+        if(results.buildings.length > 0) for(bldg of results.buildings) fResults = fResults.concat(rooms.filter(room => room.Building == bldg))
+        if(results.roomNumbers.length > 0) for(num of results.roomNumbers) fResults.push(config.data[num])
         return fResults;
     }
 }
 
  // convert the query to standard case (capitalize each word)
-const getStdCase = (query) => {
-    for(word of query) {
-        word[0].toUpperCase();
+ const getStdCase = (query) => {
+    query = query.split(" ");
+    for(word in query) {
+        query[word] = query[word].split("");
+        let letter = query[word][0];
+        query[word].splice(0, 1,letter.toUpperCase());
+        query[word] = query[word].join("");
     }
-    return query.toString();
+    query = query.join(" ");
+    return query;
 }
 const CheckNum = (query, num) => {
     for(i in query) if(query[i] != num[i]) return false
@@ -51,23 +54,17 @@ const CheckNum = (query, num) => {
 }
 const CheckRoom = (query, room) => {
     // Force type compliance
-    try {
-        assert(query.length > 1 && query.match(/[0-9]+/));
-    } catch(error) {
-        return "query non compliant";
-    }
-    
+    assert(query.split(" ").length > 1 && query.match(/[0-9]+/));
     assert(room.Building && room.Room)
     // string manip to get building name and room # (assumes last word is room #)
     query = query.split(" ");
     let num = query[query.length-1];
     query.pop()
-    query = query.toString()
-   
+    query = query.join(" ")
     let std_case = getStdCase(query)
     // building/room # check
     if(room.Building.includes(query.toLowerCase()) || room.Building.includes(std_case)) {
-        return room.Room.includes(num);
+        return CheckNum(num,room.Room)
     }
 }
 module.exports = {handleSearchQuery}
