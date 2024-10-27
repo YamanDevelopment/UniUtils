@@ -19,19 +19,25 @@ function handleSearchQuery(query, config) {
     else {
         // checking room numbers
         let counter = 0;
-        if(query.split(" ").length == 1) results.roomNumbers = results.roomNumbers.concat(roomNumbers.filter(num => CheckNum(query,num)))
+        console.log("Query length: ", query.split(" ").length)
+        if(query.split(" ").length == 1) {
+            results.roomNumbers = results.roomNumbers.concat(roomNumbers.filter(num => CheckNum(query,num)))
+
+        }
 
         // checking building names
         let buildings = [...config.buildings]
         results.buildings = results.buildings.concat(buildings.filter(bldg => bldg.includes(query) || bldg.includes(query.toUpperCase()) || bldg.includes(query.toLowerCase()) || bldg.includes(getStdCase(query))))
     }
     // result handling!
+    console.log(results)
     if(results.rooms.length > 0) return results.rooms
     else {
         let fResults = [];
         // logic issue, WILL include duplicate rooms for queries less than 3 characters.
         if(results.buildings.length > 0) for(bldg of results.buildings) fResults = fResults.concat(rooms.filter(room => room.Building == bldg))
-        if(results.roomNumbers.length > 0) for(num of results.roomNumbers) fResults.push(config.data[num])
+        if(results.roomNumbers.length > 0) for(num of results.roomNumbers) fResults.push(config.data[num]);
+        console.log(fResults);
         return fResults;
     }
 }
@@ -49,9 +55,11 @@ function handleSearchQuery(query, config) {
     return query;
 }
 const CheckNum = (query, num) => {
+    query = query.split("");
+    num = num.split("")
     for(i in query) if(query[i].toUpperCase() != num[i]) return false
     return true
-}
+} 
 const CheckRoom = (query, room) => {
     // Force type compliance
     assert(query.split(" ").length > 1 && query.match(/[0-9]+/));

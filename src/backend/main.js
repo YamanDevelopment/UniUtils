@@ -79,8 +79,8 @@ app.post('/api/solve', async (req, res) => {
 });
 
 app.get('/api/rooms', (req, res) => {
-	const { query } = req;
-	const t = RoomRadar(query.query);	
+	const {query} = req;
+	const t = RoomRadar(query.query);
 	res.json(t);
 });
 

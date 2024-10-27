@@ -8,7 +8,7 @@
       <button @click="searchRooms" class="px-4 py-2 rounded-xl text-text text-center text-xl font-bold bg-gradient-to-br from-primary to-accent">Search</button>
       <div class="max-h-[75%] overflow-y-scroll p-4">
         <div v-for="room in rooms" :key="room.Room" class="w-[30vw] h-[30vh] rounded-xl bg-base flex flex-col items-center gap-2 mb-4 p-4">
-          <h2 class="text-title text-2xl">{{ room.Building }} - {{ room.Room }}</h2>
+          <h2 class="text-title text-2xl">{{ room.Number }}</h2>
           <p class="text-subheading text-lg">Type: {{ room.RoomType }}</p>
           <p class="text-subheading text-lg ">Status: {{ room.status }}</p>
           <p class="text-subheading text-lg ">Rating: {{ room.rating }}</p>
@@ -63,12 +63,14 @@ const rooms = ref([])
 
 const searchRooms = async () => {
   try {
+    console.log('sending search request');
     const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     const response = await fetch(`http://localhost:5000/api/rooms?query=${query.value}`)
     if (!response.ok) {
       throw new Error('Failed to fetch room data')
     }
     let val = await response.json()
+    console.log(val)
    
     rooms.value = val
   } catch (error) {
