@@ -1,3 +1,4 @@
+// this file handles building abbreviations, sorting, ratings, etc, and formats the object
 const {handleSearchQuery} = require("./handlesearchquery")
 const { readFileSync } = require("node:fs");
 const buildings = {
@@ -44,18 +45,13 @@ const buildings = {
 };
 const RoomRadar = (query) => {
 	const t = handleSearchQuery(query, {
-		data: JSON.parse(readFileSync("../../../data/room_data.json")),
+		data: JSON.parse(readFileSync(__dirname + "/../data/room_data.json")),
 		buildings: Object.values(buildings)
 	});
+
 	const date = new Date();
 	const time = date.getHours() + (date.getMinutes() / 60)
-	// converts a given time that follows the format above to a 12 hour string format
-	const getTimeString = (e) => {
-		console.log("Time number: ", e)
-		let t = Math.floor(e)
-		let hours = t > 12 ? t - 12 : t;
-		return hours + ":" + (Math.ceil((e - t)*60) > 9 ? Math.ceil((e - t)*60) : "0" + Math.ceil((e - t)*60)) + (t < 12 ? "AM" : "PM");
-	}
+	
 	t.forEach(r => {
 		const weekdays = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		if(!r.schedule) {
@@ -66,8 +62,6 @@ const RoomRadar = (query) => {
 			r.status = "Available all day"
 			return
 		}
-
-		console.log(r.schedule[weekdays[date.getDay()]])
 		r.schedule[weekdays[date.getDay()]].forEach(e => {
 			e.timing = {
 				start: Number(e.start.substring(0,2)) + Number(e.start.substring(3,5)) / 60,
@@ -106,6 +100,11 @@ const RoomRadar = (query) => {
 	})
 	return t
 }
-
+// converts a given time that follows the format above to a 12 hour string format
+const getTimeString = (e) => {
+	let t = Math.floor(e)
+	let hours = t > 12 ? t - 12 : t;
+	return hours + ":" + (Math.ceil((e - t)*60) > 9 ? Math.ceil((e - t)*60) : "0" + Math.ceil((e - t)*60)) + (t < 12 ? "AM" : "PM");
+}
 module.exports = {RoomRadar}
 
