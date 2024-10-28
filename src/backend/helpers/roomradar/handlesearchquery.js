@@ -19,7 +19,6 @@ function handleSearchQuery(query, config) {
     else {
         // checking room numbers
         let counter = 0;
-        console.log("Query length: ", query.split(" ").length)
         if(query.split(" ").length == 1) {
             results.roomNumbers = results.roomNumbers.concat(roomNumbers.filter(num => CheckNum(query,num)))
 
@@ -30,14 +29,14 @@ function handleSearchQuery(query, config) {
         results.buildings = results.buildings.concat(buildings.filter(bldg => bldg.includes(query) || bldg.includes(query.toUpperCase()) || bldg.includes(query.toLowerCase()) || bldg.includes(getStdCase(query))))
     }
     // result handling!
-    console.log(results)
     if(results.rooms.length > 0) return results.rooms
     else {
         let fResults = [];
         // logic issue, WILL include duplicate rooms for queries less than 3 characters.
         if(results.buildings.length > 0) for(bldg of results.buildings) fResults = fResults.concat(rooms.filter(room => room.Building == bldg))
-        if(results.roomNumbers.length > 0) for(num of results.roomNumbers) fResults.push(config.data[num]);
-        console.log(fResults);
+        if(results.roomNumbers.length > 0)
+            for(num of results.roomNumbers) fResults.some(room => room.Number == num) ? null : fResults.push(config.data[num]);
+            
         return fResults;
     }
 }
